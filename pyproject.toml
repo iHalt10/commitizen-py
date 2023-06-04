@@ -1,0 +1,38 @@
+[tool.poetry]
+name = "cz"
+version = "0.1.0"
+description = ""
+license = "MIT License"
+authors = ["Takeaki Oura <ihalt10@icloud.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.11"
+questionary = "^1.10.0"
+cleo = "^1.0.0a5"
+tomlkit = "^0.11.1"
+semver = "^3.0.0.dev3"
+Jinja2 = "^3.1.2"
+mdformat = "^0.7.14"
+
+[tool.poetry.dev-dependencies]
+mypy = "^0.950"
+flake8 = "^4.0.1"
+black = "^22.3.0"
+isort = "^5.10.1"
+lxml = "^4.8.0"
+pyright = "^1.1.249"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 100
+
+[tool.isort]
+profile = "black"
+line_length= 100
+force_single_line = true
+
+[tool.poetry.scripts]
+cz = "cz.__main__:main"

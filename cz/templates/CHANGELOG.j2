@@ -1,0 +1,37 @@
+# Changelog
+All notable changes to this project will be documented in this file.
+This project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
+
+
+{% for version in version_groups.values() %}
+## [{{ version.tag.name }}]({{ repository_url }}/releases/tag/{{ version.tag.name }}) - {{ version.tag.creator.datetime.date() }}
+
+
+{% if version.previous %}
+<small>[Compare with {{ version.previous.tag.name }}]({{ repository_url }}/compare/{{ version.previous.tag.name }}...{{ version.tag.name }})</small>
+{% endif %}
+
+
+{% for commit_group in version.commit_groups.values() %}
+### {{ commit_group.title }}
+{% for commit in commit_group.commits %}
+<a id="{{ commit.hash.long }}"></a>
+- {% if commit.scope %}**{{ commit.scope }}:** {% endif %}{{ commit.message.subject_to_markdown(repository_url) }}
+  - [Open on github]({{ repository_url }}/commit/{{ commit.hash.long }})
+  - Author: {{ commit.author.name }}
+{%- if 'Closes' in commit.message.footer %}{{ '\n' }}  - {{ commit.message.footer['Closes'].to_markdown(repository_url) }}{% endif %}
+{%- if 'revert' in commit_group.commit_type.name %}{{ '\n' }}  - [Jump to revert commit](#{{ commit.message.footer["Revert Hash"].hash }}){% endif %}
+{% endfor %}
+{% endfor %}
+
+
+{% if version.notes %}
+### BREAKING CHANGE
+{% for note in version.notes %}
+#### Note {{ loop.index }}:
+{{ note }}
+{% endfor %}
+{% endif %}
+
+
+{% endfor %}
